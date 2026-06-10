@@ -30,6 +30,10 @@ public class TemposConcreteBuilder implements ConfigBuilder {
         produto.setTreplica(tempo);
     }
     @Override
+    public void buildDr(int tempo){
+        produto.setDr(tempo);
+    }
+    @Override
     public ConfigProduct build() {
         ConfigProduct result = this.produto;
         this.reset();

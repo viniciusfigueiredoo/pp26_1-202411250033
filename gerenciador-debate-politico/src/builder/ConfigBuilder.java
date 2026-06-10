@@ -6,5 +6,6 @@ public interface ConfigBuilder {
     void buildResposta(int tempo);
     void buildReplica(int tempo);
     void buildTreplica(int tempo);
+    void buildDr(int tempo);
     ConfigProduct build();
 }
