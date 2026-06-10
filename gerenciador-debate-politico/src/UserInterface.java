@@ -1,8 +1,11 @@
-import debate.PoliticoConcrete;
+import debate.prototype.PoliticoConcrete;
 import operacional.Facade;
 
+import java.util.List;
+import java.util.Random;
+
 public interface UserInterface {
-    // "Construtor"
+    // Construtor
     Facade facade = Facade.getInstance();
 
     // Métodos auxiliares
@@ -14,7 +17,7 @@ public interface UserInterface {
         facade.cadastrarEleitor(facade.obterPolitico("Tiago"));
         facade.cadastrarEleitor(facade.obterPolitico("Pedro"));
 
-        int[] tempos = {1, 2, 3, 4};
+        int[] tempos = {1, 2, 3, 4, 1};
         facade.configuracao(tempos);
 
         System.out.print("Candidatos: ");
@@ -25,6 +28,10 @@ public interface UserInterface {
 
         while (!facade.todosForamInquiridores()) {
             PoliticoConcrete[] sorteados = facade.sortear();
+            // Simula solicitação de DR antes do debate
+            List<PoliticoConcrete> candidatos = facade.getCandidatos();
+            PoliticoConcrete solicitante = candidatos.get(new Random().nextInt(candidatos.size()));
+            solicitante.pressionarBotaoDR();
             facade.iniciarDebate();
         }
 

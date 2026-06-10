@@ -1,6 +1,9 @@
 package operacional;
 
 import debate.*;
+import debate.prototype.InquiridoConcrete;
+import debate.prototype.InquiridorConcrete;
+import debate.prototype.PoliticoConcrete;
 import sorteio.GerenciadorPoliticos;
 import observer.EleitorConcrete;
 import builder.TemposConcreteBuilder;
@@ -31,6 +34,7 @@ public class Facade {
         }
         return instance;
     }
+
     public void configuracao(int[] tempos) {
         builder.buildPergunta(tempos[0]);
         builder.buildResposta(tempos[1]);
@@ -39,9 +43,11 @@ public class Facade {
         config = builder.build();
         logger.registrarLog("Configura tempo");
     }
+
     public String getLogs(){
         return logger.getLogs();
     }
+
     public PoliticoConcrete[] sortear() {
         PoliticoConcrete[] sorteados = gerenciaPoliticos.sortear();
         mediadorDebate.setInquiridor((InquiridorConcrete) sorteados[0]);
@@ -50,28 +56,35 @@ public class Facade {
         logger.registrarLog("Inquirido sorteado");
         return sorteados;
     }
+
     public void iniciarDebate(){
         System.out.println();
         System.out.println("Iniciando debate...");
         System.out.println();
         logger.registrarLog("Debate Iniciado");
         mediadorDebate.debate(config);
+        mediadorDebate.concederDR();
     }
+
     public void cadastrarPolitico(String nome) {
         gerenciaPoliticos.criarPolitico(nome, mediadorDebate);
         logger.registrarLog("Político cadastrado: " + nome);
     }
+
     public void cadastrarEleitor(PoliticoConcrete candidato) {
         EleitorConcrete eleitor = new EleitorConcrete(candidato);
         candidato.registrarObserver(eleitor);
         logger.registrarLog("Eleitor cadastrado");
     }
+
     public PoliticoConcrete obterPolitico(String nome) {
         return gerenciaPoliticos.obterPolitico(nome);
     }
+
     public boolean todosForamInquiridores() {
         return gerenciaPoliticos.todosForamInquiridores();
     }
+
     public List<PoliticoConcrete> getCandidatos() {
         return gerenciaPoliticos.getPoliticos();
     }
