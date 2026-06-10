@@ -1,6 +1,4 @@
-package debate;
-
-import observer.EleitorObserver;
+package debate.prototype;
 
 public class InquiridorConcrete extends PoliticoConcrete {
     // Construtor
